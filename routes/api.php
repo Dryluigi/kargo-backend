@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('districts')->group(function () {
-    Route::get('', [DistrictController::class, 'getAll']);
+Route::middleware('cors')->group(function () {
+    Route::prefix('districts')->group(function () {
+        Route::get('', [DistrictController::class, 'getAll']);
+    });
 });
