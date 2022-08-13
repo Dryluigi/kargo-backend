@@ -5,6 +5,7 @@ use App\Http\Controllers\ShipmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TruckContoller;
+use App\Http\Controllers\Api\DriverController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,12 @@ Route::middleware('cors')->group(function () {
     Route::prefix('shipments')->group(function () {
         Route::post('/create', [ShipmentController::class, 'create']);
         Route::post('/{shipment}/allocate', [ShipmentController::class, 'allocate']);
+        Route::post('/{shipment}/status', [ShipmentController::class, 'updateStatus']);
         Route::get('/list', [ShipmentController::class, 'getAll']);
     });
+    Route::post('driver', [DriverController::class, 'create']);
+    Route::put('driver/update-status/{id}', [DriverController::class, 'updateStatus']);
+    Route::post('driver/{id}', [DriverController::class, 'update']);
+    Route::get('driver/{id}', [DriverController::class, 'find']);
+    Route::get('driver', [DriverController::class, 'getDrivers']);
 });

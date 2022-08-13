@@ -35,7 +35,11 @@ class ShipmentController extends Controller
         ];
     }
 
-    public function sorted($sort_type){
-        // return Shipment::with(['origin', 'destination', 'driver', 'truck'])->orderBy()->get();
+    public function updateStatus(Request $request, Shipment $shipment)
+    {
+        $shipment->update($request->only(['status']));
+
+        return [
+            'message' => 'Shipment status updated successfully',
+        ];
     }
-}

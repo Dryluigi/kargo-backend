@@ -183,6 +183,10 @@ class TruckContoller extends Controller
             return DataFormater::responseApi(400,$error->getMessage());
         }
     }
+
+    public function sorted($column_name,$sort_type){
+        return DataFormater::responseApi(200,"success",Truck::orderBy("$column_name","$sort_type")->get());
+    }
     
 
 }
