@@ -11,5 +11,4 @@ class Driver extends Model
     protected $table = "drivers";
     protected $primaryKey = 'id';
     protected $fillable = ['name','phone_number', 'id_card_file_name', 'driver_license_file_name'];
-    public $timestamps = false;
 }
