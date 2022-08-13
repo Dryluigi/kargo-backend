@@ -174,4 +174,15 @@ class TruckContoller extends Controller
         }
     }
 
+    public function filter($truck_type)
+    {
+        try{
+           $truck = Truck::whereIn('truck_type',explode(",",$truck_type))->get();  
+           return  DataFormater::responseApi(200,'Success',$truck);       
+        }catch(Exception $error){
+            return DataFormater::responseApi(400,$error->getMessage());
+        }
+    }
+    
+
 }
