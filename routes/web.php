@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DriverController;
 
 Route::post('api/driver', [DriverController::class, 'create']);
+Route::put('api/driver/update-status/{id}', [DriverController::class, 'updateStatus']);

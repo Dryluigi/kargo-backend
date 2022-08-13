@@ -52,4 +52,36 @@ class DriverController extends Controller
             'message' => 'Somethings wrong.'
         ], 500);
     }
+
+    public function updateStatus(Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:drivers,id',
+            'is_active' => 'required|boolean'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $idInt = intval($id);
+        if ($idInt != $request->id) {
+            return response()->json(['message' => 'Request invalid.'], 400);
+        }
+
+        try {
+            Driver::where('id', $idInt)
+                ->update(['is_active' => $request->is_active]);
+            return response()->json([
+                'message' => 'Succes to update status driver',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Somethings wrong.',
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Somethings wrong.',
+        ], 500);
+    }
 }
