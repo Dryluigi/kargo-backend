@@ -43,3 +43,4 @@ class ShipmentController extends Controller
             'message' => 'Shipment status updated successfully',
         ];
     }
+}
