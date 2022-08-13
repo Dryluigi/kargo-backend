@@ -34,4 +34,13 @@ class ShipmentController extends Controller
             'message' => 'Shipment allocated successfully',
         ];
     }
+
+    public function updateStatus(Request $request, Shipment $shipment)
+    {
+        $shipment->update($request->only(['status']));
+
+        return [
+            'message' => 'Shipment status updated successfully',
+        ];
+    }
 }
