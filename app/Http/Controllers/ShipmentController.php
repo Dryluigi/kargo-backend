@@ -22,43 +22,6 @@ class ShipmentController extends Controller
 
     public function getAll()
     {
-        return [
-            [
-                'id' => 1,
-                'shipment_number' => 'DO-1390123',
-                'license' => 'B 12312 UTT',
-                'driver' => [
-                    'name' => 'Budi'
-                ],
-                'origin' => [
-                    'id' => 1,
-                    'name' => 'Jakarta'
-                ],
-                'destination' => [
-                    'id' => 2,
-                    'name' => 'Surabaya'
-                ],
-                'loading_date' => '2022-08-10',
-                'status' => 'Created'
-            ],
-            [
-                'id' => 2,
-                'shipment_number' => 'DO-1390124',
-                'license' => 'L 12322 UTB',
-                'driver' => [
-                    'name' => 'Harto'
-                ],
-                'origin' => [
-                    'id' => 5,
-                    'name' => 'Yogyakarta'
-                ],
-                'destination' => [
-                    'id' => 2,
-                    'name' => 'Surabaya'
-                ],
-                'loading_date' => '2022-04-10',
-                'status' => 'At Origin'
-            ],
-        ];
+        return Shipment::with(['origin', 'destination', 'driver', 'truck'])->get();
     }
 }

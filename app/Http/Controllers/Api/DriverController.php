@@ -40,6 +40,7 @@ class DriverController extends Controller
 
             return response()->json([
                 'message' => 'Succes to create driver',
+                'data' => $driver,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -70,8 +71,11 @@ class DriverController extends Controller
         try {
             Driver::where('id', $idInt)
                 ->update(['is_active' => $request->is_active]);
+            $driver = Driver::find($idInt);
+
             return response()->json([
                 'message' => 'Succes to update status driver',
+                'data' => $driver,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -131,6 +135,7 @@ class DriverController extends Controller
 
             return response()->json([
                 'message' => 'Succes to update driver',
+                'data' => $driver,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -166,5 +171,22 @@ class DriverController extends Controller
         return response()->json([
             'message' => 'Somethings wrong.'
         ], 500);
+    }
+
+    public function getDrivers(Request $request) {
+        $name = $request->query('name');
+
+        $drivers = [];
+        if (strlen($name) != 0) {
+            $drivers = Driver::where('name', 'like', '%'.$name.'%')->get();
+        } else {
+            $drivers = Driver::all();
+        }
+
+        if (count($drivers) == 0) {
+            return response()->json(['message' => 'Data is empty.'], 404);
+        }
+
+        return response()->json(['data' => $drivers], 200);
     }
 }
