@@ -21,14 +21,6 @@ class DriverController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        if (strlen($request->name) == 0) {
-            return response()->json(["message': 'field 'name' cant empty."], 400);
-        }
-
-        if (strlen($request->phone_number) == 0) {
-            return response()->json(["message': 'field 'phone_number' cant empty."], 400);
-        }
-
         // TODO: Simpan file yang dikirim ke storage
         try {
             $driver = Driver::create([
