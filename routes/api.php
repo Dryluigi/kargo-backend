@@ -31,7 +31,7 @@ Route::middleware('cors')->group(function () {
     Route::put('update-truck/{id}',[TruckContoller::class,'update']);
     Route::get('truck-search/{license_number}',[TruckContoller::class,'search']);
     Route::prefix('shipments')->group(function () {
-        Route::post('', [ShipmentController::class, 'create']);
+        Route::post('/create', [ShipmentController::class, 'create']);
         Route::get('/list', [ShipmentController::class, 'getAll']);
     });
 });
