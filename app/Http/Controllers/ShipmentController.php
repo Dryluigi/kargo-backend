@@ -34,4 +34,8 @@ class ShipmentController extends Controller
             'message' => 'Shipment allocated successfully',
         ];
     }
+
+    public function sorted($sort_type){
+        // return Shipment::with(['origin', 'destination', 'driver', 'truck'])->orderBy()->get();
+    }
 }
