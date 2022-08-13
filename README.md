@@ -84,3 +84,4 @@
 | __PUT__ /api/driver/update-status/{id}     | Update Status Driver       | path: driver id,  body: id, is_active|
 | __PUT__ /api/driver/{id}     | Update Data Driver       | path: driver id,  body: id, phone_number, id_card_file_name, driver_license_file_name, is_active|
 
+
