@@ -94,9 +94,7 @@ class DriverController extends Controller
         $upload_folder = 'drivers';
 
         if ($validator->fails()) {
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
+            return response()->json($validator->errors(), 400);
         }
 
         $idInt = intval($id);
@@ -137,6 +135,31 @@ class DriverController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Somethings wrong.',
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Somethings wrong.'
+        ], 500);
+    }
+
+    public function find($id) {
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|exists:drivers,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        try {
+            $idInt = intval($id);
+            $driver = Driver::find($idInt);
+
+            return response()->json($driver, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Somethings wrong.'
             ], 500);
         }
 
