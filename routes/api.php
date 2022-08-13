@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DistrictController;
+use App\Http\Controllers\ShipmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('cors')->group(function () {
     Route::prefix('districts')->group(function () {
         Route::get('', [DistrictController::class, 'getAll']);
+    });
+
+    Route::prefix('shipments')->group(function () {
+        Route::post('', [ShipmentController::class, 'create']);
+        Route::get('/list', [ShipmentController::class, 'getAll']);
     });
 });
