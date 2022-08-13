@@ -21,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('trucks',[TruckContoller::class,'index']);
 Route::post('add-truck',[TruckContoller::class,'store']);
-Route::get('truck/{truck:license_number}',[TruckContoller::class,'show']);
+Route::get('truck/{id}',[TruckContoller::class,'show']);
 Route::put('update-truck/{id}',[TruckContoller::class,'update']);

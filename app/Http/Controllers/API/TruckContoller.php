@@ -41,10 +41,12 @@ class TruckContoller extends Controller
     {
         try{
             $this->validate($request,[
-                "license_number" => ['required'],
-                "license_type" => ['required'],
-                "truck_type" => ['required'],
-                "production_year" => ['required']
+                "license_number" => 'required',
+                "license_type" => 'required',
+                "truck_type" => 'required',
+                "production_year" => 'required',
+                "stnk_file" => "nullable|image",
+                "kir_file" => "nullable|image"
             ]);
 
             $truck = Truck::create([
@@ -53,6 +55,24 @@ class TruckContoller extends Controller
                 "truck_type" => $request->truck_type,
                 "production_year" => $request->production_year
             ]);
+
+            if(!empty($truck) && $request->stnk_file){
+                $stnk_file_name = time().'.'.$request->stnk_file->extension();
+                $request->stnk_file->move(public_path('images'),$stnk_file_name);
+                $path = "public/images/$stnk_file_name";
+                $truck->update([
+                    "stnk_file_name"=>$path
+                ]);
+            }
+
+            if(!empty($truck) && $request->kir_file){
+                $kir_file_name = time().'.'.$request->kir_file->extension();
+                $request->kir_file->move(public_path('images'),$kir_file_name);
+                $path = "public/images/$kir_file_name";
+                $truck->update([
+                    "kir_file_name"=>$path
+                ]);
+            }
 
             return  DataFormater::responseApi(200,'Success Stored Data',$truck);
         }catch(Exception $error){
@@ -66,12 +86,13 @@ class TruckContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Truck $truck)
+    public function show($id)
     {
         try{
+            $truck = Truck::findOrFail($id);
             return DataFormater::responseApi(200,"success",$truck);
         }catch(Exception $error){
-            return DataFormater::responseApi(400,$error->getMessage());
+            return DataFormater::responseApi(400,"data empty");
         }
     }
 
