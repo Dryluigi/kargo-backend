@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\Api\DriverController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('api/driver', [DriverController::class, 'create']);
