@@ -67,4 +67,5 @@
 | Route      | Description | Argument |
 | ----------- | ----------- | ----------- |
 | __GET__ /api/districts      | Get All Districts       | ?name (filter district name) |
+| __GET__ /api/shipments/list      | Get All Shipment       | - |
 | __POST__ /api/shipments/create      | Create Shipment       | origin_id, destination_id, loading_date (in body) |
