@@ -12,12 +12,12 @@ class DriverController extends Controller
     public function create(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'phone_number' => 'required',
+            'phone_number' => 'required|unique:drivers,phone_number',
             'id_card_file_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'driver_license_file_name' => 'required|image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
-        if (!$validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
@@ -29,12 +29,14 @@ class DriverController extends Controller
             return response()->json(["message': 'field 'phone_number' cant empty."], 400);
         }
 
+        // TODO: Simpan file yang dikirim ke storage
         try {
             $driver = Driver::create([
                 'name' => $request->name,
                 'phone_number' => $request->phone_number,
                 'id_card_file_name' => $request->id_card_file_name,
                 'driver_license_file_name' => $request->driver_license_file_name,
+                'is_active' => true,
             ]);
 
             return response()->json([
