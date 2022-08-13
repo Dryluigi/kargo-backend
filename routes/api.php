@@ -35,6 +35,7 @@ Route::get('trucks',[TruckContoller::class,'index']);
     Route::prefix('shipments')->group(function () {
         Route::post('/create', [ShipmentController::class, 'create']);
         Route::post('/{shipment}/allocate', [ShipmentController::class, 'allocate']);
+        Route::post('/{shipment}/status', [ShipmentController::class, 'updateStatus']);
         Route::get('/list', [ShipmentController::class, 'getAll']);
     });
 });
