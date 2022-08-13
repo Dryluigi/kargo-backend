@@ -78,5 +78,9 @@
 | __GET__ /api/truck-change-status/{id}   | Change status of truck       | data(0,1) 1 = active, 0 unactive |
 | __GET__ /api/truck-filter/{truck_type}   | get data list truck by truck type     | send data truck type split using ","  |
 | __GET__ /api/truck-sort/{column_name}/{sort_type}   | get data list truck by column name and sort type    | |
-
+| __POST__ /api/driver     | Create Driver       | body:  name, phone_number, id_card_file_name, driver_license_file_name |
+| __GET__ /api/driver/{id}     | Get Detail Driver       | path: {id} driver id |
+| __GET__ /api/driver     | Get List Driver       | ?name (filter driver name) |
+| __PUT__ /api/driver/update-status/{id}     | Update Status Driver       | path: driver id,  body: id, is_active|
+| __PUT__ /api/driver/{id}     | Update Data Driver       | path: driver id,  body: id, phone_number, id_card_file_name, driver_license_file_name, is_active|
 
