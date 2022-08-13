@@ -167,4 +167,21 @@ class DriverController extends Controller
             'message' => 'Somethings wrong.'
         ], 500);
     }
+
+    public function getDrivers(Request $request) {
+        $name = $request->query('name');
+
+        $drivers = [];
+        if (strlen($name) != 0) {
+            $drivers = Driver::where('name', 'like', '%'.$name.'%')->get();
+        } else {
+            $drivers = Driver::all();
+        }
+
+        if (count($drivers) == 0) {
+            return response()->json(['message' => 'Data is empty.'], 404);
+        }
+
+        return response()->json(['data' => $drivers], 200);
+    }
 }
