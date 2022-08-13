@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
+use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
 {
@@ -23,5 +24,14 @@ class ShipmentController extends Controller
     public function getAll()
     {
         return Shipment::with(['origin', 'destination', 'driver', 'truck'])->get();
+    }
+
+    public function allocate(Request $request, Shipment $shipment)
+    {
+        $shipment->update($request->only(['truck_id', 'driver_id']));
+
+        return [
+            'message' => 'Shipment allocated successfully',
+        ];
     }
 }
