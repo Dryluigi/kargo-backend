@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Driver;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 class DriverController extends Controller
@@ -20,7 +21,7 @@ class DriverController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        
+
         $upload_folder = 'drivers';
         $image_id_card_file_name = $request->file('id_card_file_name');
         $image_driver_license_file_name = $request->file('driver_license_file_name');
@@ -80,6 +81,67 @@ class DriverController extends Controller
 
         return response()->json([
             'message' => 'Somethings wrong.',
+        ], 500);
+    }
+
+    public function update(Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:drivers,id',
+            'name' => 'required',
+            'phone_number' => 'required|exists:drivers,phone_number',
+        ]);
+
+        $upload_folder = 'drivers';
+
+        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+        }
+
+        $idInt = intval($id);
+        if ($idInt != $request->id) {
+            return response()->json(['message' => 'Request invalid.'], 400);
+        }
+
+        $new_image_uploaded_path_id_card_file_name = "";
+        if ($request->hasFile('id_card_file_name')) {
+            $image_id_card_file_name = $request->file('id_card_file_name');
+            $new_image_uploaded_path_id_card_file_name = $image_id_card_file_name->store($upload_folder, 'public');
+            Storage::delete($upload_folder.$request->file('id_card_file_name'));
+        } else {
+            Storage::delete($upload_folder.$request->file('id_card_file_name'));
+        }
+
+        $new_image_uploaded_path_driver_license_file_name = "";
+        if ($request->hasFile('driver_license_file_name')) {
+            $image_driver_license_file_name = $request->file('driver_license_file_name');
+            $new_image_uploaded_path_driver_license_file_name = $image_driver_license_file_name->store($upload_folder, 'public');
+            Storage::delete($upload_folder.$request->file('driver_license_file_name'));
+        } else {
+            Storage::delete($upload_folder.$request->file('driver_license_file_name'));
+        }
+
+        try {
+            $driver = Driver::find($idInt);
+            $driver = $driver->update([
+                'name' => $request->name,
+                'phone_number' => $request->phone_number,
+                'id_card_file_name' => $new_image_uploaded_path_id_card_file_name,
+                'driver_license_file_name' => $new_image_uploaded_path_driver_license_file_name,
+            ]);
+
+            return response()->json([
+                'message' => 'Succes to update driver',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Somethings wrong.',
+            ], 500);
+        }
+
+        return response()->json([
+            'message' => 'Somethings wrong.'
         ], 500);
     }
 }
