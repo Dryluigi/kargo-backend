@@ -80,6 +80,11 @@ class TruckContoller extends Controller
         }
     }
 
+    public function search($license_number){
+        $truck = Truck::where('license_number','like','%'.$license_number.'%')->get();
+        return DataFormater::responseApi(200,"success",$truck);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -147,8 +152,26 @@ class TruckContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function changeStatus($id,$status)
     {
-        //
+        try{
+            if($status ==0 || $status == 1){
+                $truck = Truck::findOrFail($id);
+
+                $truck->update([
+                    "is_active" => $status
+                ]);
+                if($status){
+                    return  DataFormater::responseApi(200,'Success Deactivate Unit',$truck);
+                }else{
+                    return  DataFormater::responseApi(200,'Success Activated Unit',$truck);
+                }
+            }else{
+                return  DataFormater::responseApi(400,'Wrong data format status');
+            }            
+        }catch(Exception $error){
+            return DataFormater::responseApi(400,$error->getMessage());
+        }
     }
+
 }
