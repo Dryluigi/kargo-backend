@@ -69,5 +69,6 @@
 | __GET__ /api/districts      | Get All Districts       | ?name (filter district name) |
 | __GET__ /api/shipments/list      | Get All Shipment       | - |
 | __POST__ /api/shipments/create      | Create Shipment       | origin_id, destination_id, loading_date (in body) |
+| __POST__ /api/shipments/{shipment_id}/allocate      | Allocate Shipment       | driver_id, truck_id (in body) |
 
 
