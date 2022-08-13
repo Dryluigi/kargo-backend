@@ -92,7 +92,6 @@ class DriverController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:drivers,id',
             'name' => 'required',
-            'phone_number' => 'required|exists:drivers,phone_number',
         ]);
 
         $upload_folder = 'drivers';
