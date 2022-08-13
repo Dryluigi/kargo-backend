@@ -12,10 +12,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Http\Controllers\Api\DriverController;
-
-Route::post('api/driver', [DriverController::class, 'create']);
-Route::put('api/driver/update-status/{id}', [DriverController::class, 'updateStatus']);
-Route::post('api/driver/{id}', [DriverController::class, 'update']);
-Route::get('api/driver/{id}', [DriverController::class, 'find']);
-Route::get('api/driver', [DriverController::class, 'getDrivers']);
