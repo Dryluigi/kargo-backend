@@ -18,4 +18,24 @@ class Shipment extends Model
         'truck_id',
         'driver_id'
     ];
+
+    public function origin()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function destination()
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function driver()
+    {
+        return $this->belongsTo(Driver::class);
+    }
+
+    public function truck()
+    {
+        return $this->belongsTo(Truck::class);
+    }
 }
