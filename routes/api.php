@@ -30,6 +30,7 @@ Route::middleware('cors')->group(function () {
     Route::get('truck/{id}',[TruckContoller::class,'show']);
     Route::put('update-truck/{id}',[TruckContoller::class,'update']);
     Route::get('truck-search/{license_number}',[TruckContoller::class,'search']);
+    Route::get('truck-change-status/{id}/{status}',[TruckContoller::class,'changeStatus']);
     Route::prefix('shipments')->group(function () {
         Route::post('', [ShipmentController::class, 'create']);
         Route::get('/list', [ShipmentController::class, 'getAll']);
